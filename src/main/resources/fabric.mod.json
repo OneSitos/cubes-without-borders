@@ -50,6 +50,7 @@
         "perfect_presentation(incompatible){modrinth:PxF3g9Xm}#(ignore:curseforge)",
         "borderless-fullscreen(incompatible){modrinth:snyXnG3w}#(ignore:curseforge)",
         "simpleqol(incompatible){modrinth:CVIOn7aS}#(ignore:curseforge)",
+        "chloride(incompatible){modrinth:yD9qW65f}{curseforge:931925}",
         "fw(incompatible){curseforge:227441}#(ignore:modrinth)"
       ]
     }
@@ -71,6 +72,7 @@
     "perfect_presentation": "*",
     "borderless-fullscreen": "*",
     "simpleqol": "*",
+    "chloride": "*",
     "fw": "*"
   },
   "depends": {

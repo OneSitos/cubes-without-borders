@@ -66,6 +66,14 @@ reason = "You already have a mod that provides borderless fullscreen. Please uni
 modrinth = "QyvWSZ5S"
 curseforge = 1120678
 
+[[dependencies.${id}]]
+modId = "chloride"
+type = "incompatible"
+reason = "Please uninstall \"chloride\"."
+[dependencies.${id}.mc-publish]
+modrinth = "yD9qW65f"
+curseforge = 931925
+
 [[mixins]]
 config = "${id}.mixins.json"
 
