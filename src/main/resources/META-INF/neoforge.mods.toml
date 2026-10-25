@@ -23,15 +23,11 @@ config = "${mixins_neoforge}"
 modId = "neoforge"
 type = "required"
 versionRange = "[${neoforge},)"
-ordering = "NONE"
-side = "BOTH"
 
 [[dependencies."${id}"]]
 modId = "minecraft"
 type = "required"
 versionRange = "[${minecraft},${minecraft_next})"
-ordering = "NONE"
-side = "BOTH"
 
 [[dependencies."${id}"]]
 modId = "cloth_config"
@@ -72,5 +68,6 @@ modrinth = "QyvWSZ5S"
 curseforge = 1120678
 
 [mc-publish]
+environment = "${environment}"
 modrinth = "${modrinth}"
 curseforge = "${curseforge}"

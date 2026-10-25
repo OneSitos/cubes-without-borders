@@ -18,17 +18,14 @@ displayURL = "${homepage}"
 modId = "forge"
 mandatory = true
 versionRange = "[${forge},)"
-ordering = "NONE"
-side = "BOTH"
 
 [[dependencies."${id}"]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[${minecraft},${minecraft_next})"
-ordering = "NONE"
-side = "BOTH"
 
 [mc-publish]
+environment = "${environment}"
 modrinth = "${modrinth}"
 curseforge = "${curseforge}"
 dependencies = [
