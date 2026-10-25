@@ -1,3 +1,4 @@
+//~ if modmenu: >=1.15.0 'io.github.prospector.' -> 'com.terraformersmc.' as _
 //? if modmenu {
 package dev.kirant.cwb.compat.modmenu;
 

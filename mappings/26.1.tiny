@@ -1,4 +1,6 @@
 tiny	2	0	official	named
+c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
+	m	(Z)V	pauseGame	setPauseScreen
 c	com/mojang/blaze3d/platform/Window	com/mojang/blaze3d/platform/Window
 	f	Lcom/mojang/blaze3d/platform/ScreenManager;	screenManager	monitorManager
 	f	Z	vsync	exclusiveFullscreen

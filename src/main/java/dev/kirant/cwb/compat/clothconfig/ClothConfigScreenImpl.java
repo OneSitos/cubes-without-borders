@@ -1,3 +1,4 @@
+//~ if cloth-config: >3.0.0 || !forge 'me.shedaniel.forge.' -> 'me.shedaniel.' as _
 //? if cloth-config {
 package dev.kirant.cwb.compat.clothconfig;
 

@@ -1,4 +1,4 @@
-//? if sodium && sodium: <0.8.0 {
+//? if sodium: >0.0.0 <0.8.0 {
 /*package dev.kirant.cwb.compat.sodium;
 
 import dev.kirant.cwb.util.ModLoader;

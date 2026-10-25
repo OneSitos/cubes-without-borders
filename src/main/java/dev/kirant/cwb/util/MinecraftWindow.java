@@ -5,7 +5,6 @@ import com.mojang.blaze3d.platform.Window;
 import com.sun.jna.Callback;
 import com.sun.jna.CallbackReference;
 import com.sun.jna.Pointer;
-import net.minecraft.client.Minecraft;
 import org.lwjgl.system.*;
 import org.lwjgl.system.macosx.ObjCRuntime;
 
@@ -13,13 +12,6 @@ import java.nio.ByteBuffer;
 import java.util.*;
 
 public final class MinecraftWindow {
-    public static Window getInstance() {
-        //? if >=1.15 {
-        return Minecraft.getInstance().getWindow();
-        //?} else
-        //return Minecraft.getInstance().window;
-    }
-
     public static final class Windows {
         private static final String FAKE_CMD = "do.not.touch.this.process.please / net.minecraft.client.main.Main / ";
 

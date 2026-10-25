@@ -6,7 +6,6 @@ import dev.kirant.cwb.*;
 import dev.kirant.cwb.util.*;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.system.MemoryStack;
-import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
@@ -16,7 +15,8 @@ import java.util.Optional;
 
 @Mixin(value = Window.class, priority = 0)
 abstract class WindowMixin implements FullscreenManager {
-    private static @Shadow @Final Logger LOGGER;
+    //~ if >=1.18.2 'org.apache.logging.log4j.' -> 'org.slf4j.'
+    private static @Shadow @Final org.slf4j.Logger LOGGER;
 
     private @Shadow Optional<VideoMode> preferredFullscreenVideoMode;
 
@@ -47,23 +47,20 @@ abstract class WindowMixin implements FullscreenManager {
 
     @Override
     public void setFullscreenMode(FullscreenMode fullscreenMode) {
+        //~ if >=1.19 '.options.fullscreen = ' -> '.options.fullscreen().set' as _
         FullscreenMode currentFullscreenMode = this.getFullscreenMode();
         this.fullscreenRequested = fullscreenMode != FullscreenMode.OFF;
         this.preferredFullscreenMode = this.fullscreenRequested ? fullscreenMode : this.preferredFullscreenMode;
         this.fullscreen = (currentFullscreenMode == fullscreenMode) == this.fullscreenRequested;
-        Minecraft.getInstance().options.fullscreen/*? >=1.19 {*/().set/*?} else {*//*=*//*?}*/(this.fullscreenRequested);
+        Minecraft.getInstance().options.fullscreen().set(this.fullscreenRequested);
     }
 
-    //?if <26.3 {
-    /*@WrapOperation(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/MonitorManager;getMonitor(J)Lcom/mojang/blaze3d/platform/Monitor;"))
-    private Monitor patchInitialFullscreenMode(MonitorManager monitorManager, long monitor, Operation<Monitor> getMonitor) {
-    *///?} else {
+    //~ if >=26.3 'long monitor' -> 'int monitor', 'getMonitor(J)' -> 'getMonitor(I)', '<init>' -> '<init>(Lcom/mojang/blaze3d/platform/WindowEventHandler;Lcom/mojang/blaze3d/platform/DisplayData;Ljava/lang/String;ZLjava/lang/String;Lcom/mojang/blaze3d/platform/MonitorManager;Lcom/mojang/renderpearl/api/device/GpuBackend;I)V' as init
     @WrapOperation(
         method = "<init>(Lcom/mojang/blaze3d/platform/WindowEventHandler;Lcom/mojang/blaze3d/platform/DisplayData;Ljava/lang/String;ZLjava/lang/String;Lcom/mojang/blaze3d/platform/MonitorManager;Lcom/mojang/renderpearl/api/device/GpuBackend;I)V",
         at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/MonitorManager;getMonitor(I)Lcom/mojang/blaze3d/platform/Monitor;")
     )
     private Monitor patchInitialFullscreenMode(MonitorManager monitorManager, int monitor, Operation<Monitor> getMonitor) {
-        //?}
         // Do not create a fullscreen window right away, as it would steal the user's focus.
         // We will handle the transition later.
         this.fullscreenRequested = this.fullscreen = false;
@@ -88,7 +85,7 @@ abstract class WindowMixin implements FullscreenManager {
     }
 
     @WrapOperation(
-        method = /*? <26.3 {*//*"<init>"*//*?} else {*/"<init>(Lcom/mojang/blaze3d/platform/WindowEventHandler;Lcom/mojang/blaze3d/platform/DisplayData;Ljava/lang/String;ZLjava/lang/String;Lcom/mojang/blaze3d/platform/MonitorManager;Lcom/mojang/renderpearl/api/device/GpuBackend;I)V"/*?}*/,
+        method = "<init>(Lcom/mojang/blaze3d/platform/WindowEventHandler;Lcom/mojang/blaze3d/platform/DisplayData;Ljava/lang/String;ZLjava/lang/String;Lcom/mojang/blaze3d/platform/MonitorManager;Lcom/mojang/renderpearl/api/device/GpuBackend;I)V",
         at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;setMode()V")
     )
     private void init(Window window, Operation<Void> setMode) {
@@ -100,7 +97,7 @@ abstract class WindowMixin implements FullscreenManager {
         this.fullscreenRequested = this.fullscreen = !config.getUseDelayedFullscreen() && config.getFullscreenMode() != FullscreenMode.OFF;
         this.preferredFullscreenMode = config.getFullscreenMode() == FullscreenMode.OFF ? config.getPreferredFullscreenMode() : config.getFullscreenMode();
         this.previousFullscreenType = this.currentFullscreenType = null;
-        Minecraft.getInstance().options.fullscreen/*? >=1.19 {*/().set/*?} else {*//*=*//*?}*/(this.fullscreenRequested);
+        Minecraft.getInstance().options.fullscreen().set(this.fullscreenRequested);
 
         WindowHints.AUTO_ICONIFY.set(window, true);
         setMode.call(window);
@@ -115,6 +112,7 @@ abstract class WindowMixin implements FullscreenManager {
         // This is mainly relevant on platforms where glfwGetVideoMode may return an invalid value, like on macOS.
         this.refreshWindowSize();
     }
+    //~ !init
 
     @Inject(method = { "updateFullscreenIfChanged", "changeFullscreenVideoMode" }, at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;setMode()V", shift = At.Shift.AFTER))
     private void onChangeFullscreenVideoMode(CallbackInfo ci) {

@@ -1,8 +1,9 @@
-//? if sodium && sodium: <0.8.0 {
+//? if sodium: >0.0.0 <0.8.0 {
 /*package dev.kirant.cwb.compat.sodium.mixin;
 
 //? if sodium: >=0.6.0 {
 import com.mojang.blaze3d.platform.*;
+import dev.kirant.cwb.*;
 import dev.kirant.cwb.util.*;
 import net.caffeinemc.mods.sodium.client.gui.options.control.*;
 import net.minecraft.network.chat.*;
@@ -18,7 +19,7 @@ interface ControlValueFormatterMixin {
             return;
         }
 
-        Monitor monitor = MinecraftWindow.getInstance().findBestMonitor();
+        Monitor monitor = ((Window)(Object)FullscreenManager.getInstance()).findBestMonitor();
         Component description = monitor == null
             ? Components.translatable("options.fullscreen.unavailable") : v <= 0
             ? Components.translatable("options.fullscreen.current")
@@ -28,7 +29,7 @@ interface ControlValueFormatterMixin {
     }
 }
 //?} else {
-/^@org.spongepowered.asm.mixin.Mixin(value = net.caffeinemc.mods.sodium.client.gui.SodiumGameOptionPages.class, remap = false)
+/^@org.spongepowered.asm.mixin.Mixin(value = me.jellysquid.mods.sodium.client.gui.SodiumGameOptionPages.class, remap = false)
 abstract class ControlValueFormatterMixin { }
 ^///?}
 *///?}

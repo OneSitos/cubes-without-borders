@@ -1,4 +1,6 @@
 tiny	2	0	intermediary	named
+c	net/minecraft/class_310	net/minecraft/client/Minecraft
+	m	(Z)V	method_20539	setPauseScreen
 c	net/minecraft/class_1041	com/mojang/blaze3d/platform/Window
 	m	(ZLnet/minecraft/class_10219;)	method_4485	updateFullscreenIfChanged
 	m	()J	method_4490	handle

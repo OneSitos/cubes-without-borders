@@ -23,7 +23,7 @@ abstract class VideoSettingsScreenMixin {
         //
         // See:
         //  - https://bugs.mojang.com/browse/MC-175437
-        Window window = MinecraftWindow.getInstance();
+        Window window = (Window)(Object)FullscreenManager.getInstance();
         if (window != null) {
             window.changeFullscreenVideoMode();
         }

@@ -1,4 +1,5 @@
-//? if sodium && sodium: <0.8.0 {
+//~ if sodium: >=0.6.0 'me.jellysquid.' -> 'net.caffeinemc.', 'me/jellysquid/' -> 'net/caffeinemc/' as _
+//? if sodium: >0.0.0 <0.8.0 {
 /*package dev.kirant.cwb.compat.sodium.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.*;

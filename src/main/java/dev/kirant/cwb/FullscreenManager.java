@@ -1,10 +1,11 @@
 package dev.kirant.cwb;
 
-import dev.kirant.cwb.util.MinecraftWindow;
+import net.minecraft.client.Minecraft;
 
 public interface FullscreenManager {
     static FullscreenManager getInstance() {
-        return (FullscreenManager)(Object)MinecraftWindow.getInstance();
+        //~ if >=1.15 '.window' -> '.getWindow()'
+        return (FullscreenManager)(Object)Minecraft.getInstance().getWindow();
     }
 
     FullscreenMode getFullscreenMode();

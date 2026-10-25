@@ -127,25 +127,6 @@ val mixinConfigs = when {
     else -> listOf(mainMixinConfig)
 }
 
-stonecutter.replacements {
-    string(sc.current.parsed >= "1.18.2") {
-        replace("org.apache.logging.log4j.", "org.slf4j.")
-    }
-
-    string(sc.eval(sc.targets["sodium"]!!, ">=0.6.0")) {
-        replace("me.jellysquid.", "net.caffeinemc.")
-        replace("me/jellysquid/", "net/caffeinemc/")
-    }
-
-    string(sc.eval(sc.targets["modmenu"]!!, ">=1.15.0")) {
-        replace("io.github.prospector.modmenu.", "com.terraformersmc.modmenu.")
-    }
-
-    string(loader != "forge" || sc.eval(sc.targets["cloth-config"]!!, ">3.0.0")) {
-        replace("me.shedaniel.forge.clothconfig2.", "me.shedaniel.clothconfig2.")
-    }
-}
-
 tasks.processResources {
     fun MutableMap<String, String?>.add(key: String, value: String?) {
         inputs.property(key, value)
