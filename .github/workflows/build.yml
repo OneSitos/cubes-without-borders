@@ -26,6 +26,19 @@ jobs:
           distribution: temurin
           java-version: ${{ steps.gradle-properties.outputs.org-gradle-java-version }}
 
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Restore Loom Cache
+        uses: actions/cache@v6
+        env:
+          MAPPINGS_CACHE_KEY: ${{ hashFiles('mappings/*', '*.gradle*', 'build-logic/*', 'build-logic/src/**/*') }}
+          VERSIONS_CACHE_KEY: ${{ hashFiles('gradle.properties', 'stonecutter.properties.toml') }}
+        with:
+          path: .gradle/loom-cache
+          key: loom-${{ env.MAPPINGS_CACHE_KEY }}-${{ env.VERSIONS_CACHE_KEY }}
+          restore-keys: loom-${{ env.MAPPINGS_CACHE_KEY }}-
+
       - name: Build artifacts
         run: ./gradlew clean build --no-daemon
 
